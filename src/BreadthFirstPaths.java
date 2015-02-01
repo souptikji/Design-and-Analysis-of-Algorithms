@@ -1,3 +1,8 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
+
 /*************************************************************************
  *  Compilation:  javac BreadthFirstPaths.java
  *  Execution:    java BreadthFirstPaths G s
@@ -95,18 +100,18 @@ public class BreadthFirstPaths
     // breadth-first search from a single source
     private void bfs(Graph G, int s)
     {
-        Queue<Integer> q = new Queue<Integer>();
+        Queue<Integer> q = new LinkedList<Integer>();
 
         for (int v = 0; v < G.V(); v++)
             distTo[v] = INFINITY;
 
         distTo[s] = 0;
         marked[s] = true;
-        q.enqueue(s);
+        q.add(s);
 
         while (!q.isEmpty())
         {
-            int v = q.dequeue();
+            int v = (int) q.remove();
 
             for (int w : G.adj(v))
             {
@@ -115,7 +120,7 @@ public class BreadthFirstPaths
                     edgeTo[w] = v;
                     distTo[w] = distTo[v] + 1;
                     marked[w] = true;
-                    q.enqueue(w);
+                    q.add(w);
                 }
             }
         }
@@ -124,18 +129,18 @@ public class BreadthFirstPaths
     // breadth-first search from multiple sources
     private void bfs(Graph G, Iterable<Integer> sources)
     {
-        Queue<Integer> q = new Queue<Integer>();
+        Queue<Integer> q = new LinkedList<Integer>();
 
         for (int s : sources)
         {
             marked[s] = true;
             distTo[s] = 0;
-            q.enqueue(s);
+            q.add(s);
         }
 
         while (!q.isEmpty())
         {
-            int v = q.dequeue();
+            int v = q.remove();
 
             for (int w : G.adj(v))
             {
@@ -144,7 +149,7 @@ public class BreadthFirstPaths
                     edgeTo[w] = v;
                     distTo[w] = distTo[v] + 1;
                     marked[w] = true;
-                    q.enqueue(w);
+                    q.add(w);
                 }
             }
         }
@@ -201,7 +206,7 @@ public class BreadthFirstPaths
         // check that the distance of s = 0
         if (distTo[s] != 0)
         {
-            StdOut.println("distance of source " + s + " to itself = " +
+            System.out.println("distance of source " + s + " to itself = " +
                 distTo[s]);
 
             return false;
@@ -215,18 +220,20 @@ public class BreadthFirstPaths
             {
                 if (hasPathTo(v) != hasPathTo(w))
                 {
-                    StdOut.println("edge " + v + "-" + w);
-                    StdOut.println("hasPathTo(" + v + ") = " + hasPathTo(v));
-                    StdOut.println("hasPathTo(" + w + ") = " + hasPathTo(w));
+                    System.out.println("edge " + v + "-" + w);
+                    System.out.println("hasPathTo(" + v + ") = " +
+                        hasPathTo(v));
+                    System.out.println("hasPathTo(" + w + ") = " +
+                        hasPathTo(w));
 
                     return false;
                 }
 
                 if (hasPathTo(v) && (distTo[w] > (distTo[v] + 1)))
                 {
-                    StdOut.println("edge " + v + "-" + w);
-                    StdOut.println("distTo[" + v + "] = " + distTo[v]);
-                    StdOut.println("distTo[" + w + "] = " + distTo[w]);
+                    System.out.println("edge " + v + "-" + w);
+                    System.out.println("distTo[" + v + "] = " + distTo[v]);
+                    System.out.println("distTo[" + w + "] = " + distTo[w]);
 
                     return false;
                 }
@@ -262,7 +269,8 @@ public class BreadthFirstPaths
      */
     public static void main(String[] args)
     {
-        In in = new In(args[0]);
+        InputReader in = new InputReader(System.in);
+        OutputWriter out = new OutputWriter(System.out);
         Graph G = new Graph(in);
 
         // StdOut.println(G);
@@ -273,26 +281,26 @@ public class BreadthFirstPaths
         {
             if (bfs.hasPathTo(v))
             {
-                StdOut.printf("%d to %d (%d):  ", s, v, bfs.distTo(v));
+                System.out.printf("%d to %d (%d):  ", s, v, bfs.distTo(v));
 
                 for (int x : bfs.pathTo(v))
                 {
                     if (x == s)
                     {
-                        StdOut.print(x);
+                        System.out.print(x);
                     }
                     else
                     {
-                        StdOut.print("-" + x);
+                        System.out.print("-" + x);
                     }
                 }
 
-                StdOut.println();
+                System.out.println();
             }
 
             else
             {
-                StdOut.printf("%d to %d (-):  not connected\n", s, v);
+                System.out.printf("%d to %d (-):  not connected\n", s, v);
             }
         }
     }

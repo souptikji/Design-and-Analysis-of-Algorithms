@@ -5,11 +5,6 @@ import java.util.Map;
 
 
 /*************************************************************************
- *  Compilation:  javac Graph.java
- *  Execution:    java Graph input.txt
- *  Dependencies: Bag.java In.java StdOut.java
- *  Data files:   http://algs4.cs.princeton.edu/41undirected/tinyG.txt
- *
  *  A graph, implemented using an array of sets.
  *  Parallel edges and self-loops allowed.
  *
