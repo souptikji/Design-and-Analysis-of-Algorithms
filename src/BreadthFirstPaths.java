@@ -253,9 +253,9 @@ public class BreadthFirstPaths
 
             if (distTo[w] != (distTo[v] + 1))
             {
-                StdOut.println("shortest path edge " + v + "-" + w);
-                StdOut.println("distTo[" + v + "] = " + distTo[v]);
-                StdOut.println("distTo[" + w + "] = " + distTo[w]);
+            	System.out.println("shortest path edge " + v + "-" + w);
+            	System.out.println("distTo[" + v + "] = " + distTo[v]);
+            	System.out.println("distTo[" + w + "] = " + distTo[w]);
 
                 return false;
             }
