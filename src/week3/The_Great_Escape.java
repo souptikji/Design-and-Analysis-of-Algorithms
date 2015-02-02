@@ -64,25 +64,7 @@ class Graph
         }
     }
 
-    public Graph(InputReader in)
-    {
-        this(in.readInt());
-
-        int E = in.readInt();
-
-        if (E < 0)
-        {
-            throw new IllegalArgumentException(
-                "Number of edges must be nonnegative");
-        }
-
-        for (int i = 0; i < E; i++)
-        {
-            int v = in.readInt();
-            int w = in.readInt();
-            addEdge(v, w);
-        }
-    }
+    
 
     
     /**
@@ -124,8 +106,8 @@ class Graph
         validateVertex(v);
         validateVertex(w);
         E++;
-        adj[v].add(w);
-        adj[w].add(v);
+        adj[v].add(new Integer(w));
+        adj[w].add(new Integer(v));
     }
 
     /**
@@ -134,7 +116,7 @@ class Graph
      * @param v the vertex
      * @throws java.lang.IndexOutOfBoundsException unless 0 <= v < V
      */
-    public List<Integer> adj(int v)
+    public List adj(int v)
     {
         validateVertex(v);
 
@@ -208,20 +190,23 @@ class BFSPath
 		Queue q= new LinkedList();
 		
 		//insert source into queue
-		q.add(source);
+		q.add(new Integer(source));
 		visited[source]=true;
 		distTo[source]=0;
 		
 		//BFS traversal
 		while(q.isEmpty()!=true)
 		{
-			int v=(int)(q.remove());
+			Integer vint=(Integer)(q.remove());
+			int v=vint.intValue();
 			if(v==dest)
 			{
 				break;
 			}
-			for(int w:G.adj(v))
+			//for(int w:G.adj(v))
+			for(int i=0;i<G.adj(v).size();++i)
 			{
+				int w=((Integer)G.adj(v).get(i)).intValue();
 				if(!visited[w])
 				{
 					q.add(w);
