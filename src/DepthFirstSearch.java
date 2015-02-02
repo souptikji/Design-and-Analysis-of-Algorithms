@@ -41,10 +41,10 @@ public class DepthFirstSearch
     // depth first search from v
     private void dfs(Graph G, int v)
     {
-        //Concept of time : increment time only when you are leaving the node, the time has passed.
+        //Concept of time : increment time only when you are done with processing the node, the time has passed.
         marked[v] = true;
         pretime[v] = global_time;
-        ++global_time; //incrementing the time because we leaving the node to explore its children
+        ++global_time; //incrementing the time because we are done with processing the node, now to explore its children
 
         for (int w : G.adj(v))
         {
