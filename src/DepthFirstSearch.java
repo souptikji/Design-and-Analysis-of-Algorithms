@@ -20,7 +20,9 @@
 public class DepthFirstSearch
 {
     private boolean[] marked; // marked[v] = is there an s-v path?
-    private int count; // number of vertices connected to s
+    private int count=0; // number of vertices connected to s
+    private int[] precount;
+    private int[] postcount;
 
     /**
      * Computes the vertices in graph <tt>G</tt> that are
@@ -31,14 +33,17 @@ public class DepthFirstSearch
     public DepthFirstSearch(Graph G, int s)
     {
         marked = new boolean[G.V()];
+        precount = new int[G.V()];
+        postcount = new int[G.V()];
         dfs(G, s);
     }
 
     // depth first search from v
     private void dfs(Graph G, int v)
     {
-        count++;
         marked[v] = true;
+        precount[v]=count;
+        count++;//incrementing the count because we have marked it
 
         for (int w : G.adj(v))
         {
@@ -47,6 +52,10 @@ public class DepthFirstSearch
                 dfs(G, w);
             }
         }
+        
+        //Everything has been marked- write postcount and increment count again
+        postcount[v] = count;
+        count++;
     }
 
     /**
