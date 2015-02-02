@@ -19,7 +19,7 @@ public class Graph
 
         this.V = V;
         this.E = 0;
-        adj = (ArrayList<Integer>[]) new ArrayList[4];
+        adj = (ArrayList<Integer>[]) new ArrayList[V];
 
         for (int v = 0; v < V; v++)
         {

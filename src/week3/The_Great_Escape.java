@@ -1,10 +1,15 @@
 package week3;
 
+
+
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 
@@ -12,16 +17,33 @@ public class The_Great_Escape
 {
 	public static void main(String[] args)
 	{
-		int V,E;
+		int V,E,start,end,hero_location,wife_location;
 		InputReader in= new InputReader(System.in);
 		V=in.readInt(); 
 		E=in.readInt();
+		Graph G=new Graph(V);
+		
+		for(int edge=0;edge<E;++edge)
+		{
+			start=in.readInt()-1;
+			end=in.readInt()-1;
+			G.addEdge(start, end);
+		}
+		hero_location=in.readInt()-1;
+		wife_location=in.readInt()-1;
+		
+		//System.out.println(G);
+		//System.out.println("Hero->"+hero_location+" & wife->"+wife_location);
+		
+		BFSPath bfspath= new BFSPath(G,hero_location,wife_location);
+		System.out.println(bfspath.distTo[wife_location]);
 	}
 }
 
 class Graph
 {
-    private final int V;
+	@SuppressWarnings("unchecked")
+	private final int V;
     private int E;
     private List<Integer>[] adj;
 
@@ -35,7 +57,7 @@ class Graph
 
         this.V = V;
         this.E = 0;
-        adj = (ArrayList<Integer>[]) new ArrayList[4];
+        adj = (ArrayList<Integer>[]) new ArrayList[V];
 
         for (int v = 0; v < V; v++)
         {
@@ -63,32 +85,7 @@ class Graph
         }
     }
 
-    /**
-     * Initializes a new graph that is a deep copy of <tt>G</tt>.
-     * @param G the graph to copy
-     */
-    public Graph(Graph G)
-    {
-        this(G.V());
-        this.E = G.E();
-
-        for (int v = 0; v < G.V(); v++)
-        {
-            // reverse so that adjacency list is in same order as original
-            Stack<Integer> reverse = new Stack<Integer>();
-
-            for (int w : G.adj[v])
-            {
-                reverse.push(w);
-            }
-
-            for (int w : reverse)
-            {
-                adj[v].add(w);
-            }
-        }
-    }
-
+    
     /**
      * Returns the number of vertices in the graph.
      * @return the number of vertices in the graph
@@ -195,6 +192,46 @@ class Graph
         Graph G = new Graph(in);
         System.out.println(G);
     }*/
+}
+
+class BFSPath
+{
+	@SuppressWarnings("unchecked")
+	Graph G;
+	boolean[] visited;
+	int[] distTo;
+	
+	public BFSPath(Graph G,int source,int dest)
+	{
+		this.G=G;
+		visited=new boolean[G.V()];
+		distTo=new int[G.V()];
+		Queue<Integer> q= new LinkedList<Integer>();
+		
+		//insert source into queue
+		q.add(source);
+		visited[source]=true;
+		distTo[source]=0;
+		
+		//BFS traversal
+		while(q.isEmpty()!=true)
+		{
+			int v=q.remove();
+			if(v==dest)
+			{
+				break;
+			}
+			for(int w:G.adj(v))
+			{
+				if(!visited[w])
+				{
+					q.add(w);
+					visited[w]=true;
+					distTo[w]=distTo[v]+1;
+				}
+			}
+		}
+	}
 }
 
 class InputReader
