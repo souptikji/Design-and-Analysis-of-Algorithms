@@ -20,9 +20,9 @@
 public class DepthFirstSearch
 {
     private boolean[] marked; // marked[v] = is there an s-v path?
-    private int count=0; // number of vertices connected to s
-    private int[] precount;
-    private int[] postcount;
+    private int global_time = 0; // number of vertices connected to s
+    private int[] pretime;
+    private int[] posttime;
 
     /**
      * Computes the vertices in graph <tt>G</tt> that are
@@ -33,17 +33,18 @@ public class DepthFirstSearch
     public DepthFirstSearch(Graph G, int s)
     {
         marked = new boolean[G.V()];
-        precount = new int[G.V()];
-        postcount = new int[G.V()];
+        pretime = new int[G.V()];
+        posttime = new int[G.V()];
         dfs(G, s);
     }
 
     // depth first search from v
     private void dfs(Graph G, int v)
     {
+        //Concept of time : increment time only when you are leaving the node, the time has passed.
         marked[v] = true;
-        precount[v]=count;
-        count++;//incrementing the count because we have marked it
+        pretime[v] = global_time;
+        ++global_time; //incrementing the time because we leaving the node to explore its children
 
         for (int w : G.adj(v))
         {
@@ -52,10 +53,10 @@ public class DepthFirstSearch
                 dfs(G, w);
             }
         }
-        
-        //Everything has been marked- write postcount and increment count again
-        postcount[v] = count;
-        count++;
+
+        //Everything has been marked- write posttime and increment time again
+        posttime[v] = global_time;
+        ++global_time; //increasing time since we are now leaving the node, otherwise the postcount of this vertex will be the precount of the next vertex
     }
 
     /**
@@ -72,9 +73,9 @@ public class DepthFirstSearch
      * Returns the number of vertices connected to the source vertex <tt>s</tt>.
      * @return the number of vertices connected to the source vertex <tt>s</tt>
      */
-    public int count()
+    public int time()
     {
-        return count;
+        return global_time;
     }
 
     /**
@@ -94,17 +95,6 @@ public class DepthFirstSearch
             {
                 System.out.print(v + " ");
             }
-        }
-
-        System.out.println();
-
-        if (search.count() != G.V())
-        {
-            System.out.println("NOT connected");
-        }
-        else
-        {
-            System.out.println("connected");
         }
     }
 }
