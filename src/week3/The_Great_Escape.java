@@ -45,7 +45,7 @@ class Graph
 	@SuppressWarnings("unchecked")
 	private final int V;
     private int E;
-    private List<Integer>[] adj;
+    private List[] adj;
 
     public Graph(int V)
     {
@@ -57,11 +57,11 @@ class Graph
 
         this.V = V;
         this.E = 0;
-        adj = (ArrayList<Integer>[]) new ArrayList[V];
+        adj = new ArrayList[V];
 
         for (int v = 0; v < V; v++)
         {
-            adj[v] = new ArrayList<Integer>();
+            adj[v] = new ArrayList();
         }
     }
 
@@ -161,26 +161,26 @@ class Graph
      * @return the number of vertices <em>V</em>, followed by the number of edges <em>E</em>,
      *    followed by the <em>V</em> adjacency lists
      */
-    public String toString()
-    {
-        StringBuilder s = new StringBuilder();
-        String NEWLINE = System.getProperty("line.separator");
-        s.append(V + " vertices, " + E + " edges " + NEWLINE);
-
-        for (int v = 0; v < V; v++)
-        {
-            s.append(v + ": ");
-
-            for (int w : adj[v])
-            {
-                s.append(w + " ");
-            }
-
-            s.append(NEWLINE);
-        }
-
-        return s.toString();
-    }
+//    public String toString()
+//    {
+//        StringBuilder s = new StringBuilder();
+//        String NEWLINE = System.getProperty("line.separator");
+//        s.append(V + " vertices, " + E + " edges " + NEWLINE);
+//
+//        for (int v = 0; v < V; v++)
+//        {
+//            s.append(v + ": ");
+//
+//            for (int w :adj[v])
+//            {
+//                s.append(w + " ");
+//            }
+//
+//            s.append(NEWLINE);
+//        }
+//
+//        return s.toString();
+//    }
 
     /**
      * Unit tests the <tt>Graph</tt> data type.
@@ -206,7 +206,7 @@ class BFSPath
 		this.G=G;
 		visited=new boolean[G.V()];
 		distTo=new int[G.V()];
-		Queue<Integer> q= new LinkedList<Integer>();
+		Queue q= new LinkedList();
 		
 		//insert source into queue
 		q.add(source);
@@ -216,7 +216,7 @@ class BFSPath
 		//BFS traversal
 		while(q.isEmpty()!=true)
 		{
-			int v=q.remove();
+			int v=(int)(q.remove());
 			if(v==dest)
 			{
 				break;
