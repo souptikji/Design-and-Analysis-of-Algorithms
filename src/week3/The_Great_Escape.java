@@ -41,7 +41,7 @@ public class The_Great_Escape
 
 class Graph
 {
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	private final int V;
     private int E;
     private List[] adj;
@@ -177,7 +177,7 @@ class Graph
 
 class BFSPath
 {
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	Graph G;
 	boolean[] visited;
 	int[] distTo;
