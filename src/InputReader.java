@@ -94,7 +94,6 @@ class InputReader
             c = read();
         }
         while (!isSpaceChar(c));
-        System.out.println("hello");
 
         return res.toString();
     }
